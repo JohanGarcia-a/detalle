@@ -3,260 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un Ramo Especial ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+    <title>Para ti ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
     
     <style>
-        /* === ESTÉTICA GENERAL === */
+        /* === AMBIENTE Y FONDO === */
         body {
             margin: 0;
             height: 100vh;
+            background: radial-gradient(circle at center, #2b1029 0%, #0f0518 100%); /* Fondo oscuro elegante */
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            /* Fondo degradado profundo y lujoso */
-            background: radial-gradient(circle at 50% 30%, #ffdee9 0%, #b57e88 100%);
-            font-family: 'Pinyon Script', cursive;
+            justify-content: center;
             overflow: hidden;
+            font-family: 'Parisienne', cursive;
         }
 
-        /* Título principal que aparecerá al final */
-        h1.main-title {
+        /* === TEXTOS === */
+        .title-container {
             position: absolute;
-            top: 5%;
-            font-size: 4rem;
-            color: #701d34; /* Color vino tinto elegante */
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            z-index: 20;
-            /* La animación se definirá en JS para sincronizarla */
+            top: 10%;
+            text-align: center;
+            z-index: 100;
+            pointer-events: none;
         }
 
-        /* === EL ÁREA DEL RAMO === */
-        .bouquet-stage {
+        h1 {
+            color: #ffcae5;
+            font-size: 3.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.8), 0 0 20px rgba(255, 105, 180, 0.4);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: textReveal 3s ease-out 5s forwards;
+        }
+
+        .subtitle {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-top: 10px;
+            opacity: 0;
+            animation: textReveal 3s ease-out 6s forwards;
+        }
+
+        /* === ESCENARIO DEL RAMO === */
+        .bouquet {
             position: relative;
             width: 100%;
-            height: 80vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* border: 1px dashed rgba(255,0,0,0.3); /* Debug area */
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); /* Sombra general al ramo */
         }
 
-        /* === ESTILOS SVG (La magia técnica) === */
-        .flower-svg {
+        /* === ESTILOS SVG === */
+        .flower {
             position: absolute;
             overflow: visible;
-            /* Sombra realista para dar volumen 3D */
-            filter: drop-shadow(0px 10px 8px rgba(0,0,0,0.2));
-            /* La animación de mecerse se activa al final con JS */
         }
 
-        /* Clase base para los trazos que se dibujan */
-        .path-to-draw {
-            fill: transparent; /* Comienza sin relleno */
-            stroke-width: 1.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            /* Truco del trazo oculto */
-            stroke-dasharray: 2000;
-            stroke-dashoffset: 2000;
-            /* Animación del dibujo */
-            animation: drawLine 5s ease-in-out forwards;
+        /* Animación del Trazado (Dibujo) */
+        .draw-path {
+            fill: transparent;
+            stroke: #ffd700; /* Trazos dorados al inicio */
+            stroke-width: 1;
+            stroke-dasharray: 1500;
+            stroke-dashoffset: 1500;
+            animation: draw 4s ease-in-out forwards;
         }
 
-        /* Colores de los contornos (outline) */
-        .outline-petal { stroke: #d4af37; /* Dorado para el dibujo inicial */ stroke-width: 1.5; }
-        .outline-stem { stroke: #5c7c35; stroke-width: 3; }
-        .outline-stamen { stroke: #8a3324; stroke-width: 0.8; }
-        .anther-tip { fill: transparent; stroke: #8a3324; }
-
-        /* Clase que JS añade para activar el color de relleno */
-        .bloom-active {
-             /* Transición súper suave al color */
-            animation: bloomColor 3s ease-out forwards !important;
+        /* Animación del Relleno (Color) */
+        .bloom-layer {
+            opacity: 0;
+            animation: bloom 2.5s ease-in-out forwards;
         }
 
-        /* Animación de mecido suave una vez terminadas */
-        .swaying {
-            animation: gentleSway 8s ease-in-out infinite alternate;
+        /* Estilo de los Pétalos */
+        .petal-style {
+            stroke: rgba(255, 105, 180, 0.3); /* Borde sutil al final */
+            stroke-width: 0.5px;
+        }
+
+        /* Movimiento de vida (bamboleo) */
+        .alive {
+            animation: float 6s ease-in-out infinite alternate;
             transform-origin: bottom center;
         }
 
-        /* === KEYFRAMES (Las animaciones) === */
-        @keyframes drawLine {
+        /* === KEYFRAMES === */
+        @keyframes draw {
             to { stroke-dashoffset: 0; }
         }
 
-        @keyframes bloomColor {
-            to { 
-                fill-opacity: 1; /* Aparece el relleno */
-                stroke-opacity: 0.3; /* El contorno dorado se desvanece */
-                stroke: #c24e6b; /* El contorno cambia de dorado a rosa oscuro */
-            }
+        @keyframes bloom {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        @keyframes gentleSway {
-            0% { transform: rotate(-2deg); }
-            100% { transform: rotate(2deg); }
+        @keyframes textReveal {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes titleFadeIn {
-            0% { opacity: 0; transform: translateY(-30px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes float {
+            0% { transform: rotate(-2deg) translateY(0); }
+            100% { transform: rotate(2deg) translateY(-5px); }
         }
 
-        /* Partículas de luz ambiental */
-        .bokeh {
+        /* Partículas Mágicas (Luciérnagas) */
+        .firefly {
             position: absolute;
-            background: rgba(255,255,255,0.6);
+            width: 4px;
+            height: 4px;
+            background-color: #ffd700;
             border-radius: 50%;
-            filter: blur(8px);
-            animation: floatBokeh 15s infinite linear;
+            box-shadow: 0 0 10px #ffd700, 0 0 20px #ff69b4;
+            opacity: 0;
+            animation: fly 8s infinite linear;
+            pointer-events: none;
         }
-        @keyframes floatBokeh {
-             from { transform: translateY(100vh) translateX(-50px); }
-             to { transform: translateY(-10vh) translateX(50px); }
+
+        @keyframes fly {
+            0% { opacity: 0; transform: translate(0, 0); }
+            10% { opacity: 1; }
+            50% { opacity: 0.5; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translate(var(--x-end), -100vh); }
         }
+
     </style>
 </head>
 <body>
 
-    <h1 class="main-title" id="mainTitle">Para la más hermosa</h1>
+    <div class="title-container">
+        <h1>¡Feliz Día del Amor y la Amistad!</h1>
+        <div class="subtitle">Eres mi persona favorita ❤️</div>
+    </div>
 
-    <div class="bouquet-stage" id="bouquetContainer">
+    <div class="bouquet" id="garden">
+        
         <svg style="display: none;">
-            <symbol id="ultra-lily" viewBox="0 0 250 300">
+            <symbol id="lux-lily" viewBox="0 0 300 300">
                 <defs>
-                    <radialGradient id="petalMasterGrad" cx="50%" cy="75%" r="70%">
-                        <stop offset="5%"  stop-color="#eaffd1" /> <stop offset="20%" stop-color="#fff6a1" /> <stop offset="45%" stop-color="#ff4d80" /> <stop offset="85%" stop-color="#ffc2d1" /> <stop offset="100%" stop-color="#ffffff" /> </radialGradient>
-                     <linearGradient id="stemMasterGrad" x1="0" y1="1" x2="0" y2="0">
-                         <stop offset="0%" stop-color="#3e5c22;" />
-                         <stop offset="100%" stop-color="#7a9c4d;" />
+                    <radialGradient id="petalGlow" cx="50%" cy="80%" r="70%">
+                        <stop offset="0%" stop-color="#4a0418" /> <stop offset="20%" stop-color="#ff0055" /> <stop offset="50%" stop-color="#ff69b4" /> <stop offset="90%" stop-color="#ffeef5" /> </radialGradient>
+
+                    <linearGradient id="backPetalShadow" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#b32d58" />
+                        <stop offset="100%" stop-color="#ff8da1" />
                     </linearGradient>
+
+                    <pattern id="speckles" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <circle cx="2" cy="2" r="1" fill="#780822" opacity="0.6"/>
+                        <circle cx="10" cy="12" r="1.5" fill="#780822" opacity="0.6"/>
+                        <circle cx="15" cy="5" r="0.8" fill="#780822" opacity="0.6"/>
+                    </pattern>
                 </defs>
 
-                <path class="path-to-draw outline-stem fillable" d="M125,300 C120,220 130,180 125,150" fill="none" stroke="url(#stemMasterGrad)" />
+                <path class="draw-path" d="M150,300 Q145,230 150,180" stroke="#2d5a27" stroke-width="4" fill="none" />
 
-                <g class="fillable-group" fill="url(#petalMasterGrad)" fill-opacity="0">
-                    <g filter="brightness(0.85)">
-                         <path class="path-to-draw outline-petal" d="M125,150 C90,120 60,70 90,30 C125,60 125,150 125,150 Z" />
-                         <path class="path-to-draw outline-petal" d="M125,150 C160,120 190,70 160,30 C125,60 125,150 125,150 Z" />
-                    </g>
+                <g class="bloom-layer" style="animation-delay: 0.5s">
+                    <path class="petal-style" d="M150,180 Q110,140 100,80 Q130,120 150,180 Z" fill="url(#backPetalShadow)" /> <path class="petal-style" d="M150,180 Q190,140 200,80 Q170,120 150,180 Z" fill="url(#backPetalShadow)" /> <path class="petal-style" d="M150,180 Q150,120 150,60 Q150,120 150,180 Z" fill="url(#backPetalShadow)" /> </g>
+
+                <g class="bloom-layer" style="animation-delay: 0.8s">
+                    <path class="petal-style" d="M150,185 C120,130 90,50 150,10 C210,50 180,130 150,185 Z" fill="url(#petalGlow)" />
+                    <path class="petal-style" d="M150,185 C100,170 40,140 30,90 C70,110 120,160 150,185 Z" fill="url(#petalGlow)" />
+                    <path class="petal-style" d="M150,185 C200,170 260,140 270,90 C230,110 180,160 150,185 Z" fill="url(#petalGlow)" />
                     
-                    <path class="path-to-draw outline-petal" d="M125,155 C105,100 90,20 125,5 C160,20 145,100 125,155 Z" />
-                    <path class="path-to-draw outline-petal" d="M125,155 C85,145 30,110 20,65 C55,85 100,130 125,155 Z" />
-                    <path class="path-to-draw outline-petal" d="M125,155 C165,145 220,110 230,65 C195,85 150,130 125,155 Z" />
-                     <path class="path-to-draw outline-petal" d="M125,155 C100,180 70,200 60,160 C80,140 110,150 125,155 Z" />
-                    <path class="path-to-draw outline-petal" d="M125,155 C150,180 180,200 190,160 C170,140 140,150 125,155 Z" />
+                    <path d="M150,185 C130,140 110,80 150,40 C190,80 170,140 150,185 Z" fill="url(#speckles)" opacity="0.7" style="mix-blend-mode: multiply;" />
                 </g>
 
-                 <g class="stamen-group" fill-opacity="0">
-                    <path class="path-to-draw outline-stamen" d="M125,155 C120,120 110,90 105,70" fill="none"/>
-                    <path class="path-to-draw outline-stamen" d="M125,155 C130,120 140,90 145,70" fill="none"/>
-                    <path class="path-to-draw outline-stamen" d="M125,155 C125,110 125,80 125,60" fill="none"/>
-                    <path class="path-to-draw outline-stamen" d="M125,155 C115,115 95,100 85,85" fill="none"/>
-                    <path class="path-to-draw outline-stamen" d="M125,155 C135,115 155,100 165,85" fill="none"/>
-                    <ellipse class="path-to-draw anther-tip fillable" cx="105" cy="70" rx="4" ry="6" fill="#8a3324"/>
-                    <ellipse class="path-to-draw anther-tip fillable" cx="145" cy="70" rx="4" ry="6" fill="#8a3324"/>
-                    <ellipse class="path-to-draw anther-tip fillable" cx="125" cy="60" rx="4" ry="7" fill="#8a3324"/>
-                    <ellipse class="path-to-draw anther-tip fillable" cx="85" cy="85" rx="5" ry="4" fill="#8a3324"/>
-                    <ellipse class="path-to-draw anther-tip fillable" cx="165" cy="85" rx="5" ry="4" fill="#8a3324"/>
+                <g class="draw-path">
+                     <path d="M150,185 C120,130 90,50 150,10 C210,50 180,130 150,185 Z" />
+                    <path d="M150,185 C100,170 40,140 30,90 C70,110 120,160 150,185 Z" />
+                    <path d="M150,185 C200,170 260,140 270,90 C230,110 180,160 150,185 Z" />
+                </g>
+
+                <g class="bloom-layer" style="animation-delay: 1.5s">
+                    <path d="M150,185 Q140,140 135,110" stroke="#780822" stroke-width="2" fill="none" />
+                    <path d="M150,185 Q160,140 165,110" stroke="#780822" stroke-width="2" fill="none" />
+                    <path d="M150,185 Q150,140 150,100" stroke="#8cb369" stroke-width="2" fill="none" /> <ellipse cx="135" cy="110" rx="3" ry="5" fill="#590518" />
+                    <ellipse cx="165" cy="110" rx="3" ry="5" fill="#590518" />
+                    <circle cx="150" cy="100" r="3" fill="#d4e09b" />
                 </g>
             </symbol>
         </svg>
     </div>
 
     <script>
-        const container = document.getElementById('bouquetContainer');
-        const title = document.getElementById('mainTitle');
+        const garden = document.getElementById('garden');
         
-        // Configuración para un ramo denso y natural.
-        // z: controla qué flor va delante o detrás.
-        const flowersConfig = [
-            { x: 0, y: -20, scale: 1.4, rot: 0, delay: 0.5, z: 20 },   // CENTRAL GIGANTE
-            { x: -110, y: 40, scale: 1.1, rot: -35, delay: 1.5, z: 15 }, // Izquierda media
-            { x: 110, y: 40, scale: 1.1, rot: 35, delay: 1.8, z: 15 },  // Derecha media
-            { x: -60, y: -100, scale: 0.9, rot: -15, delay: 2.5, z: 5 }, // Fondo izquierda
-            { x: 60, y: -100, scale: 0.9, rot: 15, delay: 2.8, z: 5 },  // Fondo derecha
-            { x: -80, y: 130, scale: 0.85, rot: -50, delay: 3.5, z: 18 }, // Abajo izquierda (frente)
-            { x: 80, y: 130, scale: 0.85, rot: 50, delay: 3.8, z: 18 }   // Abajo derecha (frente)
+        // CONFIGURACIÓN DEL RAMO (Posiciones calculadas para volumen)
+        // Scale: tamaño, Z-index: capa, Rot: rotación
+        const bouquetConfig = [
+            { x: 0, y: -20, scale: 1.5, rot: 0, z: 10, delay: 0 },     // Central Gigante
+            { x: -100, y: 50, scale: 1.1, rot: -30, z: 8, delay: 0.5 }, // Izquierda Media
+            { x: 100, y: 50, scale: 1.1, rot: 30, z: 8, delay: 0.8 },  // Derecha Media
+            { x: -50, y: 150, scale: 0.9, rot: -15, z: 12, delay: 1.2 }, // Abajo Izq
+            { x: 50, y: 150, scale: 0.9, rot: 15, z: 12, delay: 1.5 },  // Abajo Der
+            { x: 0, y: -130, scale: 0.8, rot: 0, z: 5, delay: 2.0 },    // Arriba Fondo (Pico)
+            { x: -140, y: -40, scale: 0.8, rot: -45, z: 4, delay: 2.2 }, // Fondo Lejano Izq
+            { x: 140, y: -40, scale: 0.8, rot: 45, z: 4, delay: 2.5 }   // Fondo Lejano Der
         ];
 
-        let flowersFinished = 0;
-
-        flowersConfig.forEach((config, index) => {
-            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.classList.add('flower-svg');
-            svg.setAttribute('width', '250px');
-            svg.setAttribute('height', '300px');
-            svg.style.transformOrigin = "bottom center";
+        // GENERAR FLORES
+        bouquetConfig.forEach(config => {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('flower', 'alive');
             
-            // Posicionamiento complejo
-            svg.style.transform = `translate(${config.x}px, ${config.y}px) scale(${config.scale}) rotate(${config.rot}deg)`;
-            svg.style.zIndex = config.z;
+            // Posicionamiento
+            wrapper.style.left = `calc(50% + ${config.x}px - 150px)`; // Centrado matemático
+            wrapper.style.top = `calc(50% + ${config.y}px - 150px)`;
+            wrapper.style.zIndex = config.z;
+            wrapper.style.transform = `scale(${config.scale}) rotate(${config.rot}deg)`;
+            
+            // Crear SVG
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", "300");
+            svg.setAttribute("height", "300");
+            svg.style.overflow = "visible";
 
             const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-            use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#ultra-lily');
+            use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#lux-lily');
+            
             svg.appendChild(use);
-            container.appendChild(svg);
+            wrapper.appendChild(svg);
+            garden.appendChild(wrapper);
 
-            // --- Lógica de Animación ---
-            const pathsToDraw = svg.querySelectorAll('.path-to-draw');
-            const fillableItems = svg.querySelectorAll('.fillable-group, .fillable');
-
-            // 1. Retraso del dibujo
-            pathsToDraw.forEach(path => {
-                path.style.animationDelay = config.delay + 's';
+            // Ajustar retraso de animación individualmente
+            const animations = wrapper.querySelectorAll('.draw-path, .bloom-layer');
+            animations.forEach(el => {
+                // Sumamos el delay base + el delay de configuración de la flor
+                const existingDelay = parseFloat(getComputedStyle(el).animationDelay) || 0;
+                el.style.animationDelay = (existingDelay + config.delay) + 's';
             });
-
-            // 2. Detectar fin del dibujo para iniciar el coloreado
-            // Usamos el pétalo principal como referencia de tiempo
-            const triggerPath = svg.querySelector('.outline-petal');
-            if(triggerPath) {
-                triggerPath.addEventListener('animationend', () => {
-                    // Pequeña pausa dramática antes de colorear
-                    setTimeout(() => {
-                         fillableItems.forEach(item => item.classList.add('bloom-active'));
-                    }, 300);
-
-                    // 3. Cuando termina de colorearse, activar el mecido suave
-                    setTimeout(() => {
-                        svg.classList.add('swaying');
-                        // Sincronizar el bamboleo para que no se muevan todas igual
-                        svg.style.animationDelay = (index * 0.5) + 's'; 
-                        
-                        // Contar flores terminadas para mostrar el título
-                        flowersFinished++;
-                        if(flowersFinished === flowersConfig.length) {
-                            setTimeout(() => {
-                                title.style.animation = "titleFadeIn 3s ease-out forwards";
-                            }, 1000);
-                        }
-                    }, 3500); // Tiempo estimado que tarda en colorearse
-
-                }, { once: true });
-            }
         });
 
-         // Efecto Bokeh (Luces desenfocadas de fondo)
-         function createBokeh() {
-            const bokeh = document.createElement('div');
-            bokeh.classList.add('bokeh');
-            const size = Math.random() * 50 + 20 + 'px';
-            bokeh.style.width = size;
-            bokeh.style.height = size;
-            bokeh.style.left = Math.random() * 100 + 'vw';
-            bokeh.style.top = Math.random() * 100 + 'vh';
-            bokeh.style.opacity = Math.random() * 0.3;
-            // Velocidades y retrasos aleatorios
-            bokeh.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            bokeh.style.animationDelay = Math.random() * 5 + 's';
-            document.body.appendChild(bokeh);
+        // GENERAR LUCIÉRNAGAS (AMBIENTE)
+        function createFireflies() {
+            for(let i=0; i<30; i++) {
+                const fly = document.createElement('div');
+                fly.classList.add('firefly');
+                fly.style.left = Math.random() * 100 + 'vw';
+                fly.style.top = Math.random() * 100 + 'vh';
+                fly.style.animationDelay = Math.random() * 5 + 's';
+                fly.style.setProperty('--x-end', (Math.random() * 200 - 100) + 'px');
+                document.body.appendChild(fly);
+            }
         }
-        // Crear 20 luces ambientales
-        for(let i=0; i<20; i++) createBokeh();
+        createFireflies();
 
     </script>
 </body>
