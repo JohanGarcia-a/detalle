@@ -3,85 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para alguien especial ❤️</title>
+    <title>Para ti ❤️</title>
     <style>
+        :root {
+            --lily-white: #ffffff;
+            --lily-pink: #ffc2d1;
+            --lily-center: #ffd166;
+            --stem-green: #6a994e;
+        }
+
         body {
             margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, #fff0f3 0%, #ffc1cf 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%);
+            font-family: 'Dancing Script', cursive, serif;
             overflow: hidden;
         }
 
-        .container { text-align: center; z-index: 2; }
+        .canvas {
+            position: relative;
+            text-align: center;
+            z-index: 5;
+        }
 
-        /* Flor Central */
-        .flower { position: relative; width: 100px; height: 100px; margin: 0 auto 30px; }
-        .petal { position: absolute; background-color: #ff4d6d; width: 50px; height: 80px; border-radius: 50% 50% 10% 10%; left: 25px; transform-origin: bottom center; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .p1 { transform: rotate(0deg); } .p2 { transform: rotate(45deg); } .p3 { transform: rotate(90deg); } .p4 { transform: rotate(135deg); }
-        .p5 { transform: rotate(180deg); } .p6 { transform: rotate(225deg); } .p7 { transform: rotate(270deg); } .p8 { transform: rotate(315deg); }
-        .center { position: absolute; width: 40px; height: 40px; background: #ffb703; border-radius: 50%; top: 60px; left: 30px; z-index: 10; }
+        /* Contenedor de los Lirios */
+        .flower-cluster {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
 
-        .message h1 { color: #c9184a; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-        .message p { color: #ff4d6d; font-size: 1.2rem; font-weight: bold; }
+        .lily {
+            position: relative;
+            width: 80px;
+            height: 120px;
+            margin: 0 -10px;
+        }
 
-        /* Estilo de los pétalos que caen */
-        .falling-petal {
+        /* Pétalos Estilo Lily */
+        .petal {
             position: absolute;
-            background-color: #ffb3c1;
-            border-radius: 150% 0 150% 0;
+            width: 40px;
+            height: 90px;
+            background: linear-gradient(to bottom, var(--lily-white), var(--lily-pink));
+            border-radius: 50% 50% 20% 20%;
+            left: 20px;
+            transform-origin: bottom center;
+            box-shadow: inset 0 0 10px rgba(255, 182, 193, 0.5);
+        }
+
+        /* Rotación para dar forma de Lily */
+        .p1 { transform: rotate(0deg) scaleY(1.1); }
+        .p2 { transform: rotate(60deg); }
+        .p3 { transform: rotate(120deg); }
+        .p4 { transform: rotate(180deg); }
+        .p5 { transform: rotate(240deg); }
+        .p6 { transform: rotate(300deg); }
+
+        .lily-center {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--lily-center);
+            border-radius: 50%;
+            top: 75px;
+            left: 32px;
+            z-index: 10;
+            box-shadow: 0 0 15px var(--lily-center);
+        }
+
+        /* Tallo */
+        .stem {
+            width: 6px;
+            height: 150px;
+            background: var(--stem-green);
+            margin: -20px auto 0;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* Texto */
+        .message {
+            margin-top: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 3s ease-in;
+        }
+
+        h1 { font-size: 3rem; margin: 0; }
+        p { font-size: 1.5rem; margin: 10px 0 0; font-weight: 300; }
+
+        /* Brillos / Sparkles */
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
             opacity: 0.8;
             pointer-events: none;
-            z-index: 1;
+            animation: blink 2s infinite;
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); }
-            100% { transform: translateY(110vh) rotate(360deg); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <div class="flower">
-            <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
-            <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
-            <div class="center"></div>
+    <div class="canvas">
+        <div class="flower-cluster">
+            <div class="lily">
+                <div class="petal p1"></div><div class="petal p2"></div>
+                <div class="petal p3"></div><div class="petal p4"></div>
+                <div class="petal p5"></div><div class="petal p6"></div>
+                <div class="lily-center"></div>
+                <div class="stem"></div>
+            </div>
+            <div class="lily" style="transform: scale(1.3) translateY(-20px);">
+                <div class="petal p1"></div><div class="petal p2"></div>
+                <div class="petal p3"></div><div class="petal p4"></div>
+                <div class="petal p5"></div><div class="petal p6"></div>
+                <div class="lily-center"></div>
+                <div class="stem"></div>
+            </div>
+            <div class="lily">
+                <div class="petal p1"></div><div class="petal p2"></div>
+                <div class="petal p3"></div><div class="petal p4"></div>
+                <div class="petal p5"></div><div class="petal p6"></div>
+                <div class="lily-center"></div>
+                <div class="stem"></div>
+            </div>
         </div>
+
         <div class="message">
             <h1>¡Feliz Día del Amor y la Amistad!</h1>
             <p>Gracias por estar en mi vida. ❤️</p>
         </div>
     </div>
 
-    <audio autoplay loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.classList.add('falling-petal');
-            
-            // Valores aleatorios para los pétalos
-            const size = Math.random() * 15 + 10 + 'px';
-            petal.style.width = size;
-            petal.style.height = size;
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
-            
-            document.body.appendChild(petal);
-
-            // Limpiar pétalos después de que caigan
-            setTimeout(() => { petal.remove(); }, 5000);
+        // Generador de brillos de fondo
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            const size = Math.random() * 6 + 2 + 'px';
+            sparkle.style.width = size;
+            sparkle.style.height = size;
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
         }
 
-        // Crear pétalos cada 300ms
-        setInterval(createPetal, 300);
+        // Crear 50 brillos al cargar
+        for (let i = 0; i < 50; i++) {
+            createSparkle();
+        }
     </script>
 </body>
 </html>
