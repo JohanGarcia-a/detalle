@@ -195,6 +195,7 @@
             align-items: center;
             transform: translateY(30px);
             transition: transform 0.5s ease;
+            z-index: 10;
         }
 
         .glow-bg {
@@ -219,6 +220,34 @@
             filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
         }
 
+        /* === PASTO (NUEVO) === */
+        .grass-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            z-index: 20; /* Delante del brillo, detrás del botón */
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .grass-blade {
+            position: absolute;
+            bottom: -10px;
+            transform-origin: bottom center;
+            animation: swayGrass 4s ease-in-out infinite alternate;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+        }
+
+        @keyframes swayGrass {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
         /* === MEDIA QUERIES (Para Celulares) === */
         @media (max-width: 768px) {
             .bouquet-container {
@@ -233,6 +262,10 @@
 
             .modal-content {
                 padding: 25px 15px;
+            }
+            
+            .grass-container {
+                height: 80px; /* Pasto más bajo en móviles */
             }
         }
 
@@ -286,11 +319,14 @@
                 A lo mejor prefieres a alguien que esté contigo todos los días,<br>
                 y yo no lo he estado por tratar de mejorar un futuro juntos.<br><br>
                 Solo quiero que sepas que te amo y eres especial para mí.<br>
-                No te quiero perder."
+                No te quiero perder. Te amo LILI"
             </div>
             <button class="close-btn" onclick="closeLetter()">Guardar Carta</button>
         </div>
     </div>
+
+    <!-- CONTENEDOR DE PASTO (NUEVO) -->
+    <div class="grass-container" id="grassField"></div>
 
     <div class="bouquet-container" id="bouquet">
         <div class="glow-bg"></div>
@@ -310,8 +346,20 @@
                 <radialGradient id="gradSunset" cx="50%" cy="80%" r="70%"><stop offset="0%" stop-color="#6a040f" /><stop offset="25%" stop-color="#d00000" /><stop offset="60%" stop-color="#e85d04" /><stop offset="95%" stop-color="#ffba08" /></radialGradient>
                 <linearGradient id="shadowSunset" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9d0208" /><stop offset="100%" stop-color="#dc2f02" /></linearGradient>
 
+                <!-- Gradiente para el pasto -->
+                <linearGradient id="gradGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2d6a4f" /><stop offset="100%" stop-color="#081c15" /></linearGradient>
+
                 <filter id="softGlow"><feGaussianBlur stdDeviation="0.3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
+
+            <!-- Símbolo de Pasto -->
+            <symbol id="grass-clump" viewBox="0 0 100 100">
+                <path d="M50,100 Q30,60 10,20 Q40,70 50,100 Z" fill="url(#gradGrass)" opacity="0.9"/>
+                <path d="M50,100 Q70,50 80,10 Q60,70 50,100 Z" fill="url(#gradGrass)" opacity="0.8"/>
+                <path d="M50,100 Q50,40 40,5 Q55,60 50,100 Z" fill="url(#gradGrass)" opacity="1"/>
+                <path d="M50,100 Q20,80 0,50 Q30,90 50,100 Z" fill="url(#gradGrass)" opacity="0.7"/>
+                <path d="M50,100 Q90,70 100,40 Q70,90 50,100 Z" fill="url(#gradGrass)" opacity="0.7"/>
+            </symbol>
 
             <!-- Símbolos de Flores -->
             <symbol id="lily-pink" viewBox="0 0 200 200">
@@ -415,6 +463,33 @@
         function closeLetter() {
             letterModal.classList.remove('open');
         }
+
+        // GENERAR PASTO
+        const grassField = document.getElementById('grassField');
+        function createGrass() {
+            const grassCount = window.innerWidth < 768 ? 20 : 40; // Menos pasto en móvil
+            for (let i = 0; i < grassCount; i++) {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.classList.add('grass-blade');
+                svg.setAttribute("width", "100");
+                svg.setAttribute("height", "100");
+                svg.style.left = `${(i / grassCount) * 100 - 5}%`; // Distribuir horizontalmente
+                
+                // Variación aleatoria para que se vea natural
+                const scale = Math.random() * 0.5 + 0.8;
+                const delay = Math.random() * 2;
+                svg.style.transform = `scale(${scale})`;
+                svg.style.animationDelay = `${delay}s`;
+                svg.style.zIndex = Math.random() > 0.5 ? 20 : 5; // Algunos delante, otros detrás
+
+                const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#grass-clump');
+                svg.appendChild(use);
+                grassField.appendChild(svg);
+            }
+        }
+        // Iniciar pasto al cargar
+        createGrass();
     </script>
 </body>
 </html>
